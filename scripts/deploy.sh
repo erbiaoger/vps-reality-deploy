@@ -147,6 +147,6 @@ fi
 echo
 echo "部署完成。"
 echo "Clash/Mihomo 订阅：http://${PUBLIC_IP}/${SUBSCRIPTION_TOKEN}"
-echo "Shadowrocket 订阅：http://${PUBLIC_IP}/${SHADOWROCKET_TOKEN}"
+echo "Shadowrocket 订阅：http://${PUBLIC_IP}/${SHADOWROCKET_TOKEN}.txt"
 echo "节点名称：VPS-Reality"
 echo "请立即保存订阅链接，并修改 root 密码。"
