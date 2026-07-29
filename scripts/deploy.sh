@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # VPS Reality 节点一键部署脚本
 #
-# 用途：在 Ubuntu VPS 上安装 Xray VLESS + Reality 和 Nginx，生成 Clash/Mihomo YAML 订阅。
+# 用途：在 Ubuntu VPS 上安装 Xray VLESS + Reality 和 Nginx，生成 Clash/Mihomo 与 Shadowrocket 订阅。
 # 用法：
 #   PUBLIC_IP=203.0.113.10 bash deploy.sh
 #   # PUBLIC_IP 可省略，脚本会尝试自动检测公网 IPv4。
@@ -23,9 +23,11 @@ if [[ -z "${PUBLIC_IP}" ]]; then
 fi
 
 SUBSCRIPTION_TOKEN="${SUBSCRIPTION_TOKEN:-$(openssl rand -hex 20)}"
+SHADOWROCKET_TOKEN="${SHADOWROCKET_TOKEN:-$(openssl rand -hex 20)}"
 XRAY_CONFIG=/usr/local/etc/xray/config.json
 WEB_ROOT=/var/www/html
 SUBSCRIPTION_FILE="${WEB_ROOT}/${SUBSCRIPTION_TOKEN}"
+SHADOWROCKET_FILE="${WEB_ROOT}/${SHADOWROCKET_TOKEN}"
 
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -qq
@@ -66,6 +68,9 @@ cat > "${XRAY_CONFIG}" <<EOF
   "outbounds": [{"protocol": "freedom", "tag": "direct"}, {"protocol": "blackhole", "tag": "block"}]
 }
 EOF
+
+URI="vless://${UUID}@${PUBLIC_IP}:443?encryption=none&security=reality&sni=www.cloudflare.com&fp=chrome&pbk=${PUBLIC_KEY}&sid=${SHORT_ID}&type=tcp#VPS-Reality"
+printf '%s' "${URI}" | base64 -w0 > "${SHADOWROCKET_FILE}"
 
 cat > "${SUBSCRIPTION_FILE}" <<EOF
 mixed-port: 7890
@@ -142,5 +147,6 @@ fi
 echo
 echo "部署完成。"
 echo "Clash/Mihomo 订阅：http://${PUBLIC_IP}/${SUBSCRIPTION_TOKEN}"
+echo "Shadowrocket 订阅：http://${PUBLIC_IP}/${SHADOWROCKET_TOKEN}"
 echo "节点名称：VPS-Reality"
 echo "请立即保存订阅链接，并修改 root 密码。"

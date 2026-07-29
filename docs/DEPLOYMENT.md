@@ -13,6 +13,8 @@
 
 `SUBSCRIPTION_TOKEN`：订阅路径令牌。未设置时随机生成；建议每台 VPS 使用不同令牌。
 
+`SHADOWROCKET_TOKEN`：小火箭订阅路径令牌。未设置时随机生成；建议每台 VPS 使用不同令牌。
+
 示例：
 
 ```bash
@@ -23,6 +25,7 @@ PUBLIC_IP=203.0.113.10 SUBSCRIPTION_TOKEN=$(openssl rand -hex 20) bash deploy.sh
 
 - `/usr/local/etc/xray/config.json`：Xray 服务端配置。
 - `/var/www/html/<令牌>`：Clash/Mihomo YAML 订阅。
+- `/var/www/html/<小火箭令牌>`：Shadowrocket Base64 订阅。
 - `/etc/nginx/sites-available/subscription`：订阅文件静态服务。
 - `xray.service`、`nginx.service`：系统服务。
 
@@ -34,4 +37,4 @@ ss -lntup | grep -E ':80|:443'
 curl http://服务器IP/订阅令牌
 ```
 
-导入 Clash 后选择 `PROXY -> VPS-Reality`。国内常用服务按规则直连，其余未匹配流量走 VPS。
+Clash/Mihomo 链接导入 Clash Verge 的 Profiles；Shadowrocket 链接在小火箭中选择 `Subscribe` 类型导入。国内常用服务按规则直连，其余未匹配流量走 VPS。
