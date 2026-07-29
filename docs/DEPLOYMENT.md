@@ -25,7 +25,7 @@ PUBLIC_IP=203.0.113.10 SUBSCRIPTION_TOKEN=$(openssl rand -hex 20) bash deploy.sh
 
 - `/usr/local/etc/xray/config.json`：Xray 服务端配置。
 - `/var/www/html/<令牌>`：Clash/Mihomo YAML 订阅。
-- `/var/www/html/<小火箭令牌>`：Shadowrocket Base64 订阅。
+- `/var/www/html/<小火箭令牌>.txt`：Shadowrocket Base64 订阅。
 - `/etc/nginx/sites-available/subscription`：订阅文件静态服务。
 - `xray.service`、`nginx.service`：系统服务。
 

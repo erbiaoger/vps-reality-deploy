@@ -18,7 +18,7 @@ scp scripts/deploy.sh root@服务器IP:/root/deploy.sh
 ssh root@服务器IP 'bash /root/deploy.sh'
 ```
 
-脚本完成后会输出 Clash/Mihomo 和 Shadowrocket 两条订阅地址。
+脚本完成后会输出 Clash/Mihomo 和 Shadowrocket 两条订阅地址，其中小火箭链接以 `.txt` 结尾。
 
 也可以在服务器上指定公网 IP：
 
