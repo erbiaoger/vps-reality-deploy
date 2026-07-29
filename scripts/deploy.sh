@@ -68,6 +68,8 @@ cat > "${XRAY_CONFIG}" <<EOF
   "outbounds": [{"protocol": "freedom", "tag": "direct"}, {"protocol": "blackhole", "tag": "block"}]
 }
 EOF
+chown nobody:nogroup "${XRAY_CONFIG}"
+chmod 640 "${XRAY_CONFIG}"
 
 URI="vless://${UUID}@${PUBLIC_IP}:443?encryption=none&security=reality&sni=www.cloudflare.com&fp=chrome&pbk=${PUBLIC_KEY}&sid=${SHORT_ID}&type=tcp#VPS-Reality"
 printf '%s' "${URI}" | base64 -w0 > "${SHADOWROCKET_FILE}"
