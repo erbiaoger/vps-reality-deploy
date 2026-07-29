@@ -1,0 +1,7 @@
+# 本地/运行时机密文件
+.env
+*.key
+*.pem
+*.secret
+subscription*
+config.generated.yaml
